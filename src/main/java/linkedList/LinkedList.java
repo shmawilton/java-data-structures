@@ -74,7 +74,7 @@ public class LinkedList {
     //a linked list data structures to add items in the middle of the list
 
 
-    public void addMiddle() {
+    public void addMiddle(int index ,int item) {
         int nodes = 0;
         var current = first;
 
@@ -136,15 +136,90 @@ public class LinkedList {
     }
 
     public void reverse() {
+        if (isEmpty()) return;
         //20 <- 30 <- 40
         var array = toArray();
-        var current = first;
+        var initial_size = this.size;
+        this.size = 0;
+        this.first = this.last = null;
 
-        for (int i = size - 1; i > 0; i--) {
-            while (current != null) {
-                current.value = array[i];
-                current = current.next;
-            }
+        for (int i = initial_size - 1; i >= 0 ;i--) {
+            AddLast(array[i]);
         }
+
+
+//        var previous = first;
+//        var current = first.next;
+//        while (current != null) {
+//            var next = current.next;
+//            current.next = previous;
+//            previous = current;
+//            current = next;
+//        }
+//
+//        last = first;
+//        last.next = null;
+//        first = previous;
+    }
+
+    public int getKthNodeFromTheEnd(int k) {
+        if (isEmpty())
+            throw new IllegalStateException();
+
+        var primary = first;
+        var secondary = first;
+        int nodeDifference = 0;
+
+        while (nodeDifference < k - 1) {
+            secondary = secondary.next;
+            if (secondary == null)
+                throw new IllegalArgumentException();
+            nodeDifference++;
+        }
+
+        while (secondary != last) {
+            primary = primary.next;
+            secondary = secondary.next;
+        }
+
+        return primary.value;
+    }
+
+    public void  printMiddle() {
+        if (isEmpty()) throw new IllegalStateException();
+
+        var a = first;
+        var b  = first;
+
+        while (b != last && b.next != last) {
+            a = a.next;
+            b = b.next.next;
+        }
+
+        if (b == last)
+            System.out.println(a.value + "," + a.next.value);
+        else
+            System.out.println(a.value);
+
+//        var slow = first;
+//        var fast = first;
+//        int counter = 1;
+//
+//        for (int i = 0;;i++) {
+//            slow = slow.next;
+//            for (int j = 0; j < 2; j++) {
+//                fast = fast != null ? fast.next : null;
+//                counter++;
+//            }
+//            if (fast == last) break;
+//        }
+//
+//        if (counter % 2 == 0)
+//            System.out.println(slow.value + "," + slow.next.value);
+//        else
+//            System.out.println(slow.value);
+
+
+
     }
 }
